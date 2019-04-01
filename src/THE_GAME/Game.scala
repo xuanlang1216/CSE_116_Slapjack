@@ -74,7 +74,7 @@ class Game {
       }
     gameInfo=gameInfo+"\n"
     for(p<-Players){
-      gameInfo=gameInfo+p.userName+": "
+      gameInfo=gameInfo+p.userName+":( "+p.myCards.length+") "
       for(q<-p.myCards){
         gameInfo=gameInfo+" "+q.toString+" "
       }

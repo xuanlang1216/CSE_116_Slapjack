@@ -23,4 +23,8 @@ class Player(name:String) {
       myCards=Random.shuffle(myCards)
 
    }
+
+  def NPCSlap(theGame:Game):Unit={
+
+  }
 }

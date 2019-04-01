@@ -5,8 +5,10 @@ class NPCPlayer(name:String) extends Player(name) {
 
 
 
-    override def Slap():Unit={
-        LastSlaptime = LastSlaptime+(math.random()*100+200).toLong
+     override def NPCSlap(theGame:Game):Unit={
+         if(theGame.CardsOnDesk.head.Num==11) {
+             LastSlaptime = System.nanoTime() + (math.random() * 1000000000 + 2000000000).toLong
+         }
     }
 
 

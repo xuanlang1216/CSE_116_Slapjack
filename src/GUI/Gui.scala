@@ -12,8 +12,10 @@ object Gui extends JFXApp {
   val game = new Game
   var Player1= new Player("xuanlang")
   var Player2= new NPCPlayer("NPC1")
+  var Player3= new NPCPlayer("NPC2")
   game.PlayerJoin(Player1)
   game.PlayerJoin(Player2)
+  game.PlayerJoin(Player3)
 
   var CardDisplay :TextField = new TextField{
     editable = false
