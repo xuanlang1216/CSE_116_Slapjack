@@ -24,7 +24,7 @@ class Game {
        dealCard(i)
      }
   }
-
+   //need testing
   def dealCard(thePlayer:Player):Unit={
     if(dealCards.deck.nonEmpty){
       thePlayer.myCards=dealCards.deal()
