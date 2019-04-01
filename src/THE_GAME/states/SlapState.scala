@@ -5,7 +5,10 @@ import THE_GAME._
 import scala.concurrent.duration._
 
 class SlapState(thegame:Game) extends gameState(thegame ) {
-
+  //make all NPC Slap(between 2 to 3 second)
+  for(i<- 0 to thegame.Players.length-2){
+    thegame.Players.apply(i).Slap()
+  }
   var timeStart:Long=System.nanoTime()
   val system = akka.actor.ActorSystem("system")
   import system.dispatcher
@@ -14,6 +17,7 @@ class SlapState(thegame:Game) extends gameState(thegame ) {
     var SlowestSlapTime:Long = 0
     var fastestPlayer:Int = 0
     var fastestSlapTime:Long=30000
+    //find out which Player slap the fastest and slowest
     for(p<-thegame.Players.indices){
       if((thegame.Players.apply(p).LastSlaptime-timeStart)>0){
         if((thegame.Players.apply(p).LastSlaptime-timeStart)>SlowestSlapTime){
@@ -32,9 +36,15 @@ class SlapState(thegame:Game) extends gameState(thegame ) {
 
     }
     else{
-      //thegame.Players.apply(fastestPlayer).myCards=thegame.CardsOnDesk:::thegame.Players.apply(fastestPlayer).myCards
-      //thegame.CardsOnDesk=List()
-      //thegame.Players.apply(SlowestPlayer).shuffle()
+       //thegame.Players.apply(fastestPlayer).myCards=thegame.CardsOnDesk:::thegame.Players.apply(fastestPlayer).myCards
+       //thegame.CardsOnDesk=List()
+       //thegame.Players.apply(SlowestPlayer).shuffle()
+    }
+    if(thegame.CurrentPlayer==(thegame.Players.length-1)){
+      thegame.CurrentPlayer=0
+    }
+    else{
+      thegame.CurrentPlayer+=1
     }
     thegame.GameState=new nonSlapState(thegame)
   }

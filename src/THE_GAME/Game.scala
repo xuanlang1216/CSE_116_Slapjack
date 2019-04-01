@@ -44,12 +44,12 @@ class Game {
 
   def CurrentPlayerPlay():Unit={
       if(Players.apply(CurrentPlayer).myCards.nonEmpty){
-        CardsOnDesk=Players.apply(CurrentPlayer).PlayCard()::CardsOnDesk
+        CardsOnDesk=Players.apply(CurrentPlayer).PlayCard(this)::CardsOnDesk
       }
       else{
         Players.apply(CurrentPlayer).Point+=1
         dealCard(Players.apply(CurrentPlayer))
-        CardsOnDesk=Players.apply(CurrentPlayer).PlayCard()::CardsOnDesk
+        CardsOnDesk=Players.apply(CurrentPlayer).PlayCard(this)::CardsOnDesk
       }
   }
 
@@ -67,6 +67,21 @@ class Game {
 
   }
 
+  override def toString: String = {
+    var gameInfo:String="Cards on Desk: "
+    for(c<-CardsOnDesk) {
+        gameInfo=gameInfo+" "+c.toString+" "
+      }
+    gameInfo=gameInfo+"\n"
+    for(p<-Players){
+      gameInfo=gameInfo+p.userName+": "
+      for(q<-p.myCards){
+        gameInfo=gameInfo+" "+q.toString+" "
+      }
+      gameInfo=gameInfo+"\n"
+    }
+    gameInfo
+  }
 
 
 

@@ -1,16 +1,12 @@
 package THE_GAME
 import scala.concurrent.duration._
-class NPCPlayer extends Player {
+class NPCPlayer(name:String) extends Player(name) {
 
 
 
 
     override def Slap():Unit={
-        val system = akka.actor.ActorSystem("system")
-        import system.dispatcher
-        system.scheduler.scheduleOnce(3000 milliseconds) {
-        LastSlaptime += math.random()*100+2
-        }
+        LastSlaptime = LastSlaptime+(math.random()*100+200).toLong
     }
 
 

@@ -2,13 +2,14 @@ package THE_GAME
 
 import scala.util.Random
 
-class Player {
+class Player(name:String) {
 
    var myCards :List[Cards]= List()
    var Point:Int = 0
    var LastSlaptime:Long=System.nanoTime()
+   var userName:String=name
 
-   def PlayCard():Cards={
+   def PlayCard(theGame:Game):Cards={
          var theCard: Cards = myCards.head
          myCards = myCards.tail
          theCard

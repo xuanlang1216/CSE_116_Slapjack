@@ -10,10 +10,10 @@ import THE_GAME._
 object Gui extends JFXApp {
 
   val game = new Game
-  var Player1= new Player
-  //var Player2= new NPCPlayer
+  var Player1= new Player("xuanlang")
+  var Player2= new NPCPlayer("NPC1")
   game.PlayerJoin(Player1)
-  //game.PlayerJoin(Player2)
+  game.PlayerJoin(Player2)
 
   var CardDisplay :TextField = new TextField{
     editable = false
@@ -63,21 +63,6 @@ object Gui extends JFXApp {
     RemainingCard.text = "Remaining Cards:"+ Player1.myCards.length
     CardDisplay.text = game.DisplayLastCardOnDesk()
     PointDisplay.text = "Points: "+ Player1.Point.toString
-    var Gameinfo:String="Cards On Desk        Player1's Cards       Player2's Cards\n"
-    for (k<-0 to 100){
-      if(k<game.CardsOnDesk.length){
-        Gameinfo=Gameinfo+game.CardsOnDesk.apply(k).toString
-      }
-      Gameinfo=Gameinfo+"                       "
-      if(k<game.Players.head.myCards.length){
-        Gameinfo=Gameinfo+game.Players.head.myCards.apply(k).toString
-      }
-      Gameinfo=Gameinfo+"                   "
-      /*if(k<game.Players.apply(1).myCards.length){
-        Gameinfo=Gameinfo+game.Players.apply(1).myCards.apply(k).toString
-      }*/
-      Gameinfo=Gameinfo+"                   \n"
-    }
-    gameinfo.text=Gameinfo
+    gameinfo.text=game.toString
   }
 }
