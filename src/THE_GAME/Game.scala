@@ -41,7 +41,7 @@ class Game {
      dealCard(Players.head)
 
   }
-
+  //need testing
   def CurrentPlayerPlay():Unit={
       if(Players.apply(CurrentPlayer).myCards.nonEmpty){
         CardsOnDesk=Players.apply(CurrentPlayer).PlayCard(this)::CardsOnDesk
@@ -52,7 +52,7 @@ class Game {
         CardsOnDesk=Players.apply(CurrentPlayer).PlayCard(this)::CardsOnDesk
       }
   }
-
+ //need testing
   def DisplayLastCardOnDesk():String={
     if (CardsOnDesk.nonEmpty){
       CardsOnDesk.head.toString
