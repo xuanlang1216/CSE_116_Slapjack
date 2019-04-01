@@ -6,6 +6,7 @@ class Player {
 
    var myCards :List[Cards]= List()
    var Point:Int = 0
+   var LastSlaptime:Long=System.nanoTime()
 
    def PlayCard():Cards={
          var theCard: Cards = myCards.head
@@ -13,15 +14,8 @@ class Player {
          theCard
    }
 
-   def Slap(thegame:Game):Unit={
-     if(thegame.CardsOnDesk.head.Num==11){
-       thegame.CardsOnDesk=List()
-     }
-     else{
-       thegame.Players.head.myCards=thegame.CardsOnDesk:::thegame.Players.head.myCards
-       thegame.CardsOnDesk=List()
-     }
-     shuffle()
+   def Slap():Unit={
+     LastSlaptime=System.nanoTime()
    }
 
    def shuffle():Unit={

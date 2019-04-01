@@ -5,11 +5,11 @@ class NPCPlayer extends Player {
 
 
 
-    override def Slap(theGame:Game):Unit={
+    override def Slap():Unit={
         val system = akka.actor.ActorSystem("system")
         import system.dispatcher
         system.scheduler.scheduleOnce(3000 milliseconds) {
-            
+
         }
     }
 

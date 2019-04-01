@@ -22,11 +22,12 @@ class StartButton(game: Game, xScale: Double = 1.0, yScale: Double = 1.0)extends
 class SlapButton(game: Game, xScale: Double = 1.0, yScale: Double = 1.0)extends MyButton(game,xScale,yScale){
   text = "Slap!"
   style = "-fx-font: 24 ariel;"
-  onAction = (event:ActionEvent) => game.GameState.Slap()
+  onAction = (event:ActionEvent) => game.Players.last.Slap()
 }
 
 class PlayCardButton(game: Game, xScale: Double = 1.0, yScale: Double = 1.0)extends MyButton(game,xScale,yScale){
   text = "Play a Card"
   style = "-fx-font: 24 ariel;"
   onAction = (event:ActionEvent) => game.GameState.Play()
+
 }
