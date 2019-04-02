@@ -16,7 +16,7 @@ class DeckOfCards {
    deck=Random.shuffle(deck)
  }
 
-  //deal cards : Player take 13 cards from the deck and the deck loss 13 cards
+  //deal cards : Player take 13 cards from the deck and the deck loses 13 cards
   def deal():List[Cards]={
     val cards:List[Cards] = deck.take(13)
     deck=deck.takeRight(deck.length-13)
