@@ -31,17 +31,17 @@ class SlapState(thegame:Game) extends gameState(thegame ) {
         }
       }
     }
-    //distribute cards
-    if(SlowestPlayer<1000) {
+    //if someone slap
+    if(SlowestPlayer<1000 & fastestPlayer<1000) {
       if (thegame.CardsOnDesk.head.Num == 11) {
         thegame.Players.apply(SlowestPlayer).myCards = thegame.CardsOnDesk ::: thegame.Players.apply(SlowestPlayer).myCards
         thegame.CardsOnDesk = List()
-
+        thegame.Players.apply(SlowestPlayer).shuffle()
       }
       else {
         thegame.Players.apply(fastestPlayer).myCards = thegame.CardsOnDesk ::: thegame.Players.apply(fastestPlayer).myCards
         thegame.CardsOnDesk = List()
-        thegame.Players.apply(SlowestPlayer).shuffle()
+        thegame.Players.apply(fastestPlayer).shuffle()
       }
     }
     //switch to nextPlayer
