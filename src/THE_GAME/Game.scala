@@ -62,7 +62,7 @@ class Game {
   }*/
   def play(id:String): Unit ={
     if (CurrentPlayer==id){
-      Players(id).PlayCard(this)
+      Players(id).PlayCard()
     }
   }
 
@@ -83,6 +83,12 @@ class Game {
   }
 
   def PassToNextPlayer():Unit={
+    if((PlayerOrder.indexOf(CurrentPlayer)+1)==PlayerOrder.size){
+      CurrentPlayer=PlayerOrder.head
+    }
+    else{
+      CurrentPlayer=PlayerOrder.apply(PlayerOrder.indexOf(CurrentPlayer)+1)
+    }
   }
 
   def update(time:Long):Unit={
