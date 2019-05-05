@@ -4,7 +4,7 @@ import THE_GAME._
 
 abstract class gameState(thegame:Game) {
 
-  def Play():Unit
+  def Play(id:String):Unit
 
-  def Slap():Unit
+  def Slap(id:String):Unit
 }

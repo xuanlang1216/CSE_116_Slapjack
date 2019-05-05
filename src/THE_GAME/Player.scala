@@ -1,5 +1,7 @@
 package THE_GAME
 
+import play.api.libs.json.{Json,JsValue}
+
 import scala.util.Random
 
 class Player(name:String) {
@@ -9,7 +11,7 @@ class Player(name:String) {
    var LastSlaptime:Long=System.nanoTime()
    var userName:String=name
 
-   def PlayCard(theGame:Game):Cards={
+   def PlayCard():Cards={
          var theCard: Cards = myCards.head
          myCards = myCards.tail
          theCard
@@ -21,10 +23,21 @@ class Player(name:String) {
 
    def shuffle():Unit={
       myCards=Random.shuffle(myCards)
-
    }
 
   def NPCSlap(theGame:Game):Unit={
 
+  }
+
+  def playerState():String={
+   var card=""
+    for (i<-myCards){
+      card+=i.toString+" "
+    }
+    val playerstate:Map[String,JsValue]=Map(
+      "Cards"->Json.toJson(card),
+      "Points"->Json.toJson(Point)
+    )
+    Json.stringify(Json.toJson(playerstate))
   }
 }

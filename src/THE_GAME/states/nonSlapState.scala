@@ -2,13 +2,25 @@ package THE_GAME.states
 
 import THE_GAME._
 
-class nonSlapState(thegame:Game) extends gameState(thegame ) {
+class nonSlapState(thegame:Game) extends gameState(thegame) {
 
-  override def Play(): Unit = {
-    thegame.CurrentPlayerPlay()
-    thegame.GameState=new SlapState(thegame)
+  override def Play(id:String): Unit = {
+    if (thegame.CurrentPlayer == id) {
+      if (thegame.Players(id).myCards.nonEmpty) {
+        thegame.CardsOnDesk = thegame.Players(id).PlayCard() :: thegame.CardsOnDesk
+      }
+      else {
+        thegame.Players(id).Point += 1
+        thegame.dealCard(id)
+        thegame.CardsOnDesk = thegame.Players(id).PlayCard() :: thegame.CardsOnDesk
+      }
+      thegame.lastGameStatement+=id+"played! everyone can slap now!"
+      thegame.GameState = new SlapState(thegame)
+    }
   }
-
-  override def Slap(): Unit = {}
+  override def Slap(id:String): Unit = {
+    thegame.Players(id).myCards=thegame.Players(id).myCards.:::(thegame.CardsOnDesk)
+    thegame.Players(id).shuffle()
+  }
 
 }

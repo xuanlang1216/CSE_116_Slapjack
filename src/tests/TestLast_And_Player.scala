@@ -7,11 +7,11 @@ import org.scalatest.FunSuite
 class TestLast_And_Player extends FunSuite{
 
   test ("test current player and last card on desk."){
-    val Hakeem = new Player("Hakeem")
+    //val Hakeem = new Player("Hakeem")
 //    val Joe = new Player("Joe")
 //    val Same = new NPCPlayer("Sam")
 //    val Emily = new NPCPlayer("Emily")
-    val games = new Game
+   /* val games = new Game
 
     games.PlayerJoin(Hakeem)
     var card = Hakeem.myCards.head.toString
@@ -24,7 +24,7 @@ class TestLast_And_Player extends FunSuite{
     //assert(games.CardsOnDesk.head.toString == card, "cards1")
 //    games.PlayerJoin(Joe)
 //    games.CurrentPlayerPlay()
-//    assert(games.CurrentPlayer == 1, "test2")
+//    assert(games.CurrentPlayer == 1, "test2")*/
   }
 
 }

@@ -1,48 +1,56 @@
 package THE_GAME
 
 import THE_GAME.states._
+import play.api.libs.json.{JsValue, Json}
+import scala.collection.mutable.ListBuffer
 
 class Game {
 
   var CardsOnDesk :List[Cards] =  List()
 
-  var Players:List[Player]=List()
+  var Players:Map[String,Player]=Map()
 
   var currentTime:Long = System.nanoTime()
 
   var dealCards:DeckOfCards=new DeckOfCards
 
-  var CurrentPlayer:Int =0
+  var CurrentPlayer:String=""
 
   var GameState:gameState= new nonSlapState(this)
 
-  var lastUpdateTime:Long=System.nanoTime()
+  var lastGameStatement:String=""
+
+  var PlayerOrder:ListBuffer[String]=new ListBuffer[String]()
 
   //deal 13 cards to each player
   def start():Unit={
-     for (i<- Players){
-       dealCard(i)
-     }
+
   }
    //need testing
-  def dealCard(thePlayer:Player):Unit={
+  def dealCard(id:String):Unit={
     if(dealCards.deck.nonEmpty){
-      thePlayer.myCards=dealCards.deal()
+      Players(id).myCards=dealCards.deal()
     }
     else
     {
       dealCards=new DeckOfCards
-      thePlayer.myCards=dealCards.deal()
+      Players(id).myCards=dealCards.deal()
     }
   }
 
-  def PlayerJoin(Join:Player):Unit={
-     Players=Join::Players
-     dealCard(Players.head)
-
+  def PlayerJoin(id:String):Unit={
+     val player=new Player(id)
+     Players+=(id->player)
+     this.dealCard(id)
+     CurrentPlayer=id
+     PlayerOrder+=id
+  }
+  def PlayerLeft(id:String):Unit={
+     Players-=id
+     PlayerOrder-=id
   }
   //need testing
-  def CurrentPlayerPlay():Unit={
+  /*def CurrentPlayerPlay():Unit={
       if(Players.apply(CurrentPlayer).myCards.nonEmpty){
         CardsOnDesk=Players.apply(CurrentPlayer).PlayCard(this)::CardsOnDesk
       }
@@ -51,7 +59,18 @@ class Game {
         dealCard(Players.apply(CurrentPlayer))
         CardsOnDesk=Players.apply(CurrentPlayer).PlayCard(this)::CardsOnDesk
       }
+  }*/
+  def play(id:String): Unit ={
+    if (CurrentPlayer==id){
+      Players(id).PlayCard(this)
+    }
   }
+
+  def slap(id:String):Unit={
+
+    lastGameStatement+=id+"slap\n"
+  }
+
  //need testing
   def DisplayLastCardOnDesk():String={
     if (CardsOnDesk.nonEmpty){
@@ -63,24 +82,30 @@ class Game {
 
   }
 
+  def PassToNextPlayer():Unit={
+  }
+
   def update(time:Long):Unit={
 
   }
 
   override def toString: String = {
-    var gameInfo:String="Cards on Desk: "
-    for(c<-CardsOnDesk) {
-        gameInfo=gameInfo+" "+c.toString+" "
-      }
-    gameInfo=gameInfo+"\n"
-    for(p<-Players){
-      gameInfo=gameInfo+p.userName+":( "+p.myCards.length+") "
-      for(q<-p.myCards){
-        gameInfo=gameInfo+" "+q.toString+" "
-      }
-      gameInfo=gameInfo+"\n"
+    var cardondesk=""
+    var playerState:Map[String,JsValue]=Map()
+    for(i<-CardsOnDesk){
+      cardondesk+=i.toString+" "
     }
-    gameInfo
+
+    var gameState:Map[String,JsValue]=Map(
+      "CardOnDesk"->Json.toJson(cardondesk)
+    )
+    for((k,p)<-Players){
+      playerState=gameState+(k->Json.toJson(p.playerState()))
+    }
+    gameState=gameState+("playerinfo"->Json.toJson(playerState))
+    gameState=gameState+("lastcard"->Json.toJson(DisplayLastCardOnDesk()))
+    gameState=gameState+("laststatement"->Json.toJson(lastGameStatement))
+    Json.stringify(Json.toJson(gameState))
   }
 
 

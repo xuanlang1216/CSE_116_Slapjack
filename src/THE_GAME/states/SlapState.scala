@@ -7,9 +7,7 @@ import scala.concurrent.duration._
 class SlapState(thegame:Game) extends gameState(thegame ) {
   //make all NPC Slap(between 2 to 3 second)
   var timeStart:Long=System.nanoTime()
-  for(i<- 0 to thegame.Players.length-2){
-    thegame.Players.apply(i).NPCSlap(thegame)
-  }
+  var PlayerSlaptime:Map[String,Long]=Map()
 
   val system = akka.actor.ActorSystem("system")
   import system.dispatcher
@@ -19,7 +17,7 @@ class SlapState(thegame:Game) extends gameState(thegame ) {
     var fastestPlayer:Int = 1000
     var fastestSlapTime:Long=(300000000*10000).toLong
     //find out which Player slap the fastest and slowest
-    for(p<-thegame.Players.indices){
+    /*for(p<-thegame.Players.indices){
       if((thegame.Players.apply(p).LastSlaptime-timeStart)>0){
         if((thegame.Players.apply(p).LastSlaptime-timeStart)>SlowestSlapTime){
           SlowestPlayer = p
@@ -30,9 +28,9 @@ class SlapState(thegame:Game) extends gameState(thegame ) {
           fastestSlapTime = thegame.Players.apply(p).LastSlaptime - timeStart
         }
       }
-    }
+    }*/
     //if someone slap
-    if(SlowestPlayer<1000 & fastestPlayer<1000) {
+    /*if(SlowestPlayer<1000 & fastestPlayer<1000) {
       if (thegame.CardsOnDesk.head.Num == 11) {
         thegame.Players.apply(SlowestPlayer).myCards = thegame.CardsOnDesk ::: thegame.Players.apply(SlowestPlayer).myCards
         thegame.CardsOnDesk = List()
@@ -51,15 +49,23 @@ class SlapState(thegame:Game) extends gameState(thegame ) {
     else{
       thegame.CurrentPlayer+=1
     }
-    thegame.GameState=new nonSlapState(thegame)
+    thegame.GameState=new nonSlapState(thegame)*/
   }
 
 
 
 
-  override def Play(): Unit ={}
+  override def Play(id:String): Unit ={}
 
-  override def Slap(): Unit ={
+  override def Slap(id:String): Unit ={
+    if(thegame.CardsOnDesk.head.Num != 11){
+      thegame.Players(id).myCards=thegame.Players(id).myCards.:::(thegame.CardsOnDesk)
+      thegame.Players(id).shuffle()
+      thegame.CurrentPlayer=thegame.PlayerOrder.apply(thegame.PlayerOrder.indexOf(thegame.CurrentPlayer))
+    }
+    else()
   }
+
+
 
 }
