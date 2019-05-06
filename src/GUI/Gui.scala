@@ -20,26 +20,28 @@ class HandleMessagesFromPython() extends Emitter.Listener {
       println(jsonGameState)
       val gameState: JsValue = Json.parse(jsonGameState)
       val CardOnDesk = (gameState \ "CardOnDesk").as[String]
-      val playerinfo = (gameState \ "playerinfo").as[String]
+      val playerinfo = (gameState \ "playerinfo").as[JsValue]
       val lastCardOnDesk=(gameState\"lastcard").as[String]
-      val getplayerPoint:JsValue=Json.parse(playerinfo)
-      val myuserPoint=(getplayerPoint\"myUsername").as[String]
-      Gui.PointDisplay.text=myuserPoint
+      val myuserinfo=(playerinfo\"myUsername").as[JsValue]
+      val myuserpoint=(myuserinfo\"Points").as[Int]
+      val game_state=(gameState\"laststatement").as[String]
+      val RemainCard=(gameState\"NumberCardOnDesk").as[Int]
+      Gui.RemainingCard.text="There are "+RemainCard.toString+" cards on Desk"
+      Gui.PointDisplay.text="Your Points: "+myuserpoint.toString
       Gui.CardDisplay.text=lastCardOnDesk
-      var GameInfo="Card on Desk: "+ CardOnDesk+"\n"+playerinfo
+      var GameInfo="Card on Desk: "+ CardOnDesk+"\n"+Json.stringify(playerinfo)
       Gui.gameinfo.text=GameInfo
+      Gui.gamestatement.text=game_state
     })
 
   }
 }
 object Gui extends JFXApp {
   var socket: Socket = IO.socket("http://localhost:8080/")
-  socket.on("message", new HandleMessagesFromPython)
-
 
   socket.connect()
   socket.emit("register", "myUsername")
-
+  socket.on("message", new HandleMessagesFromPython)
   var CardDisplay :TextField = new TextField{
     editable = false
     style = "-fx-font: 18 ariel;"
@@ -56,7 +58,13 @@ object Gui extends JFXApp {
   }
 
   val gameinfo:TextArea=new TextArea{
-    //editable=false
+    editable=false
+    style="-fx-font: 18 ariel;"
+    prefHeight = 500
+    prefWidth = 500
+  }
+  val gamestatement:TextArea=new TextArea{
+    editable=false
     style="-fx-font: 18 ariel;"
     prefHeight = 500
     prefWidth = 500
@@ -77,6 +85,7 @@ object Gui extends JFXApp {
            add(PlayCard_B,2,4)
            add(PointDisplay,2,2)
            add(gameinfo,0,10)
+           add(gamestatement,2,10)
         }
       )
     }

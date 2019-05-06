@@ -60,7 +60,7 @@ class TCPsocket(gameActor:ActorRef) extends Actor {
     case SendGameState=>gameActor!SendGameState
 
     case gs: GameState =>
-      println(gs.gameState)
+      //println(gs.gameState)
       this.clients.foreach((client: ActorRef) => client ! Write(ByteString(gs.gameState+delimiter)))
   }
 

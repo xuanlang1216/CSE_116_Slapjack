@@ -61,14 +61,11 @@ class Game {
       }
   }*/
   def play(id:String): Unit ={
-    if (CurrentPlayer==id){
-      Players(id).PlayCard()
-    }
+    GameState.Play(id)
   }
 
   def slap(id:String):Unit={
-
-    lastGameStatement+=id+"slap\n"
+    GameState.Slap(id)
   }
 
  //need testing
@@ -103,10 +100,19 @@ class Game {
     }
 
     var gameState:Map[String,JsValue]=Map(
-      "CardOnDesk"->Json.toJson(cardondesk)
+      "CardOnDesk"->Json.toJson(cardondesk),
+      "NumberCardOnDesk"->Json.toJson(CardsOnDesk.size)
     )
     for((k,p)<-Players){
-      playerState=gameState+(k->Json.toJson(p.playerState()))
+      var card=""
+      for (i<-p.myCards){
+        card+=i.toString+" "
+      }
+      val playerstate:Map[String,JsValue]=Map(
+        "Cards"->Json.toJson(card),
+        "Points"->Json.toJson(p.Point)
+      )
+      playerState=playerState+(k->Json.toJson(playerstate))
     }
     gameState=gameState+("playerinfo"->Json.toJson(playerState))
     gameState=gameState+("lastcard"->Json.toJson(DisplayLastCardOnDesk()))

@@ -3,7 +3,7 @@ package THE_GAME.states
 import THE_GAME._
 
 class nonSlapState(thegame:Game) extends gameState(thegame) {
-
+  thegame.lastGameStatement+="Is time for "+ thegame.CurrentPlayer+" to play!\n"
   override def Play(id:String): Unit = {
     if (thegame.CurrentPlayer == id) {
       if (thegame.Players(id).myCards.nonEmpty) {
@@ -14,13 +14,15 @@ class nonSlapState(thegame:Game) extends gameState(thegame) {
         thegame.dealCard(id)
         thegame.CardsOnDesk = thegame.Players(id).PlayCard() :: thegame.CardsOnDesk
       }
-      thegame.lastGameStatement+=id+"played! everyone can slap now!"
+      thegame.lastGameStatement+=id+" played! everyone can slap now!\n"
       thegame.GameState = new SlapState(thegame)
     }
   }
   override def Slap(id:String): Unit = {
     thegame.Players(id).myCards=thegame.Players(id).myCards.:::(thegame.CardsOnDesk)
     thegame.Players(id).shuffle()
+    thegame.CardsOnDesk=List()
+    thegame.lastGameStatement+=id+" slap at the wrong time!\nAll cards on desk is Going to "+id+"!\n"
   }
 
 }
