@@ -1,20 +1,66 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:width="http://www.w3.org/1999/xhtml">
+<style>
+    body{
+        background: #0945C2;
+        margin: 0;}
+    #container{width:600px;height: 590px; margin:0 auto; background:#23ECE1}
+    #Points{float: left;
+        width: 100px;
+        height: 40px;
+        background: #666;
+        border: 1px solid #c7c7c7;
+        margin: 10px;}
+    #LastCard{float: left;
+        width: 100px;
+        height: 40px;
+        background: #666;
+        border: 1px solid #c7c7c7;
+        margin: 10px;}
+    #PlayerAction{float:left;
+        width: 100px;
+        height: 40px;
+        background: #666;
+        border: 1px solid #c7c7c7;
+        margin: 10px;}
+    #NumCardDesk{float: left;
+        width: 100px;
+        height: 40px;
+        background: #666;
+        border: 1px solid #c7c7c7;
+        margin: 10px;}
+    #Play{float:right;
+        width: 100px;
+        height: 100px;
+        background: #666;
+        border: 1px solid #c7c7c7;
+        margin: 10px;}
+    #Slap{float:left;
+        width: 100px;
+        height: 100px;
+        background: #666;
+        border: 1px solid #c7c7c7;
+        margin: 10px;}
+</style>
 <head>
     <meta charset="UTF-8">
-    <title>Clicker 2</title>
+    <title>Slapjack</title>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
 </head>
 <body onload="initializeGame('{{username}}');">
+<div id = "container">
+    <div id="Points" >test points</div>
+    <div id="LastCard" >test last card on desk</div>
 
-<button id="Play!" onclick="play()">Play!</button>
-<button id="Slap!" onclick="slap()">Slap!</button>
+    <button id="Slap" onclick="slap()">Slap!</button>
+    <button id="Play" onclick="play()">Play!</button>
+    <div id="PlayerAction" >test player action</div>
 
-<div id="Buttons"></div>
+    <div id="NumCardDesk" >test number of cards on desk</div>
 
-<div id="displayCards"></div>
+    <script src="game.js"></script>
+</div>
 
-<script src="game.js"></script>
 
 </body>
 </html>
