@@ -3,7 +3,7 @@ var username = "";
 var CardOnDesk="";
 var Point=0;
 var lastCardOnDesk="";
-var gameStatement=""
+var gamestate="";
 
 var socket = io.connect({transports: ['websocket']});
 
@@ -17,30 +17,23 @@ function setupSocket() {
 
     socket.on('message', function (event) {
         var gameState = JSON.parse(event);
-        document.getElementById("NumberCardOnDesk").innerHTML = gameState['NumberCardOnDesk'].toFixed(0);
-
+        document.getElementById("NumCardDesk").innerHTML = gameState['NumberCardOnDesk'].toFixed(0);
+        document.getElementById("LastCard").innerHTML = gameState['lastcard'];
+        var gameaction=gameState['laststatement'];
+        gameaction=gameaction.replace(/\n/g, "<br/>");
+        document.getElementById("PlayerAction").innerHTML=gameaction;
         var equipmentState = gameState['equipment'];
-        for (var i in equipmentList) {
-            var equipment = equipmentList[i];
-            var buttonText = equipmentState[equipment]['buttonText'];
-            buttonText = buttonText.replace(/\n/g, "<br/>");
-            document.getElementById(equipment).innerHTML = buttonText;
-        }
+        document.getElementById("Points").innerHTML=gameState['playerinfo'][username]['Points']
     });
 }
 
 
 function initializeGame(inputUsername) {
     username = inputUsername;
-
-    var html = "";
-    for (var i in equipmentList) {
-        var equipment = equipmentList[i];
-        html += '<button id="' + equipment + '" onclick="buyEquipment(\'' + equipment + '\')">' + equipment + '</button>';
-        html += '<br/>';
-    }
-    document.getElementById("equipmentButtons").innerHTML = html;
-    document.getElementById("NumberCardOnDesk").innerHTML = remainingCard;
+    document.getElementById("PlayerAction").innerHTML="";
+    document.getElementById("LastCard").innerHTML = "";
+    document.getElementById("NumCardDesk").innerHTML = remainingCard;
+    document.getElementById("Points").innerHTML = remainingCard;
 
     socket.emit("register", username);
 }
