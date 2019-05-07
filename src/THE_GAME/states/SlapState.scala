@@ -36,41 +36,44 @@ class SlapState(thegame:Game) extends gameState(thegame ) {
     }
   }
 
-  def GoToNextPlayer():Unit={
-    var playerNotSlap:List[Int]=List()
-    var slowestPlayer:String=""
-    var slowestSlapTime:Long=0
-    for(p<-thegame.PlayerOrder){
-      if(PlayerSlaptime.contains(p)){
-        if(PlayerSlaptime(p)>slowestSlapTime){
-          slowestPlayer=p
-          slowestSlapTime=PlayerSlaptime(p)
+  def GoToNextPlayer():Unit= {
+    if (thegame.CardsOnDesk.head.Num == 11) {
+      var playerNotSlap: List[Int] = List()
+      var slowestPlayer: String = ""
+      var slowestSlapTime: Long = 0
+      for (p <- thegame.PlayerOrder) {
+        if (PlayerSlaptime.contains(p)) {
+          if (PlayerSlaptime(p) > slowestSlapTime) {
+            slowestPlayer = p
+            slowestSlapTime = PlayerSlaptime(p)
+          }
+        }
+        else {
+          playerNotSlap = thegame.PlayerOrder.indexOf(p) :: playerNotSlap
         }
       }
-      else{
-        playerNotSlap=thegame.PlayerOrder.indexOf(p)::playerNotSlap
+      if (playerNotSlap.isEmpty) {
+        thegame.Players(slowestPlayer).myCards = thegame.Players(slowestPlayer).myCards.:::(thegame.CardsOnDesk)
+        thegame.Players(slowestPlayer).shuffle()
+        thegame.CardsOnDesk = List()
+        thegame.PassToNextPlayer()
+        thegame.lastGameStatement = ""
+        thegame.GameState = new nonSlapState(thegame)
+      }
+      else {
+        var r = new scala.util.Random
+        var unfortunatePlayer: String = thegame.PlayerOrder.apply(playerNotSlap.apply(r.nextInt(playerNotSlap.size)))
+        thegame.Players(unfortunatePlayer).myCards = thegame.Players(unfortunatePlayer).myCards.:::(thegame.CardsOnDesk)
+        thegame.Players(unfortunatePlayer).shuffle()
+        thegame.CardsOnDesk = List()
+        thegame.PassToNextPlayer()
+        thegame.lastGameStatement = ""
+        thegame.GameState = new nonSlapState(thegame)
       }
     }
-    if(playerNotSlap.isEmpty){
-      thegame.Players(slowestPlayer).myCards=thegame.Players(slowestPlayer).myCards.:::(thegame.CardsOnDesk)
-      thegame.Players(slowestPlayer).shuffle()
-      thegame.CardsOnDesk=List()
-      thegame.PassToNextPlayer()
-      thegame.lastGameStatement=""
-      thegame.GameState=new nonSlapState(thegame)
-    }
     else{
-      var r= new scala.util.Random
-      var unfortunatePlayer:String=thegame.PlayerOrder.apply(playerNotSlap.apply(r.nextInt(playerNotSlap.size)))
-      thegame.Players(unfortunatePlayer).myCards=thegame.Players(unfortunatePlayer).myCards.:::(thegame.CardsOnDesk)
-      thegame.Players(unfortunatePlayer).shuffle()
-      thegame.CardsOnDesk=List()
-      thegame.PassToNextPlayer()
-      thegame.lastGameStatement=""
       thegame.GameState=new nonSlapState(thegame)
     }
+
   }
-
-
-
 }
