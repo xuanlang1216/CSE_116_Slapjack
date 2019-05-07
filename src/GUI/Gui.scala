@@ -31,11 +31,13 @@ class HandleMessagesFromPython() extends Emitter.Listener {
       val myuserpoint=(myuserinfo\"Points").as[Int]
       val game_state=(gameState\"laststatement").as[String]
       val RemainCard=(gameState\"NumberCardOnDesk").as[Int]
+      val LeaderBroad=(gameState\"LeaderBroad").as[String]
       Gui.RemainingCard.text="There are "+RemainCard.toString+" cards on Desk"
       Gui.PointDisplay.text="Your Points: "+myuserpoint.toString
       Gui.CardDisplay.text=lastCardOnDesk
       var GameInfo="Card on Desk: "+ CardOnDesk+"\n"+PLAYERINFO
-      Gui.gameinfo.text=GameInfo
+      //Gui.gameinfo.text=GameInfo
+      Gui.gameinfo.text=LeaderBroad
       Gui.gamestatement.text=game_state
     })
 

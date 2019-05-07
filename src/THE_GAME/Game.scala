@@ -91,6 +91,14 @@ class Game {
   def update(time:Long):Unit={
 
   }
+  def getLeaderbroad:String={
+    var leaderbroad:String="Leader Broard\n"
+    var leader:ListBuffer[String]=PlayerOrder.sortWith(Players(_).Point>Players(_).Point)
+    for(i<-leader){
+      leaderbroad+=i+" :Cards: "+Players(i).myCards.size+" Points: "+Players(i).Point+"\n"
+    }
+    leaderbroad
+  }
 
   override def toString: String = {
     var cardondesk=""
@@ -101,7 +109,8 @@ class Game {
 
     var gameState:Map[String,JsValue]=Map(
       "CardOnDesk"->Json.toJson(cardondesk),
-      "NumberCardOnDesk"->Json.toJson(CardsOnDesk.size)
+      "NumberCardOnDesk"->Json.toJson(CardsOnDesk.size),
+      "LeaderBroad"->Json.toJson(getLeaderbroad)
     )
     for((k,p)<-Players){
       var card=""

@@ -6,12 +6,15 @@ import scala.concurrent.duration._
 
 class SlapState(thegame:Game) extends gameState(thegame ) {
   var timeStart:Long=System.nanoTime()
-  thegame.lastGameStatement="IT'S SLAP TIME NOW!"
+  thegame.lastGameStatement+="IT'S SLAP TIME NOW!"
+  var shouldexcute=true
 
   val system = akka.actor.ActorSystem("system")
   import system.dispatcher
   system.scheduler.scheduleOnce(5000.milliseconds) {
-    GoToNextPlayer()
+    if(shouldexcute) {
+      GoToNextPlayer()
+    }
   }
 
 
@@ -32,6 +35,7 @@ class SlapState(thegame:Game) extends gameState(thegame ) {
       thegame.CardsOnDesk=List()
       thegame.PassToNextPlayer()
       thegame.lastGameStatement = id+" slap in "+(timespend.toDouble/1000000000).toString+"s !\nNot a Jack!\n"+id+" gets all cards on desk.\n"
+      shouldexcute=false
       thegame.GameState=new nonSlapState(thegame)
     }
   }
