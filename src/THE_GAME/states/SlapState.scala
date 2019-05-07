@@ -5,7 +5,6 @@ import THE_GAME._
 import scala.concurrent.duration._
 
 class SlapState(thegame:Game) extends gameState(thegame ) {
-  //make all NPC Slap(between 2 to 3 second)
   var timeStart:Long=System.nanoTime()
 
   val system = akka.actor.ActorSystem("system")
@@ -31,7 +30,7 @@ class SlapState(thegame:Game) extends gameState(thegame ) {
       thegame.Players(id).shuffle()
       thegame.CardsOnDesk=List()
       thegame.PassToNextPlayer()
-      thegame.lastGameStatement += "Not a Jack!\n"+id+" gets all cards on desk.\n"
+      thegame.lastGameStatement = id+" slap in "+(timespend.toDouble/1000000000).toString+"s !\nNot a Jack!\n"+id+" gets all cards on desk.\n"
       thegame.GameState=new nonSlapState(thegame)
     }
   }
@@ -57,7 +56,7 @@ class SlapState(thegame:Game) extends gameState(thegame ) {
         thegame.Players(slowestPlayer).shuffle()
         thegame.CardsOnDesk = List()
         thegame.PassToNextPlayer()
-        thegame.lastGameStatement = ""
+        thegame.lastGameStatement = slowestPlayer+" slap the slowest!\nAll cards on desk is Going to "+slowestPlayer+"!\n"
         thegame.GameState = new nonSlapState(thegame)
       }
       else {
@@ -67,11 +66,13 @@ class SlapState(thegame:Game) extends gameState(thegame ) {
         thegame.Players(unfortunatePlayer).shuffle()
         thegame.CardsOnDesk = List()
         thegame.PassToNextPlayer()
-        thegame.lastGameStatement = ""
+        thegame.lastGameStatement = "All cards on desk is Going to "+unfortunatePlayer+"!\n"
         thegame.GameState = new nonSlapState(thegame)
       }
     }
     else{
+      thegame.PassToNextPlayer()
+      thegame.lastGameStatement=""
       thegame.GameState=new nonSlapState(thegame)
     }
 
