@@ -6,6 +6,7 @@ import scala.concurrent.duration._
 
 class SlapState(thegame:Game) extends gameState(thegame ) {
   var timeStart:Long=System.nanoTime()
+  thegame.lastGameStatement="IT'S SLAP TIME NOW!"
 
   val system = akka.actor.ActorSystem("system")
   import system.dispatcher
@@ -36,7 +37,7 @@ class SlapState(thegame:Game) extends gameState(thegame ) {
   }
 
   def GoToNextPlayer():Unit= {
-    if (thegame.CardsOnDesk.head.Num == 11) {
+    if (thegame.CardsOnDesk.nonEmpty && thegame.CardsOnDesk.head.Num == 11) {
       var playerNotSlap: List[Int] = List()
       var slowestPlayer: String = ""
       var slowestSlapTime: Long = 0
@@ -72,7 +73,6 @@ class SlapState(thegame:Game) extends gameState(thegame ) {
     }
     else{
       thegame.PassToNextPlayer()
-      thegame.lastGameStatement=""
       thegame.GameState=new nonSlapState(thegame)
     }
 
