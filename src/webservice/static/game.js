@@ -24,6 +24,7 @@ function setupSocket() {
         document.getElementById("PlayerAction").innerHTML=gameaction;
         var equipmentState = gameState['equipment'];
         document.getElementById("Points").innerHTML=gameState['playerinfo'][username]['Points']
+        document.getElementById("leaderbroad").innerHTML=game['Leaderbroad']
     });
 }
 
@@ -34,7 +35,7 @@ function initializeGame(inputUsername) {
     document.getElementById("LastCard").innerHTML = "";
     document.getElementById("NumCardDesk").innerHTML = remainingCard;
     document.getElementById("Points").innerHTML = remainingCard;
-
+    document.getElementById("leaderbroad").innerHTML=""
     socket.emit("register", username);
 }
 
