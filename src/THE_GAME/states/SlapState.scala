@@ -6,7 +6,7 @@ import scala.concurrent.duration._
 
 class SlapState(thegame:Game) extends gameState(thegame ) {
   var timeStart:Long=System.nanoTime()
-  thegame.lastGameStatement+="IT'S SLAP TIME NOW!"
+  thegame.lastGameStatement+="IT'S SLAP TIME NOW!\n"
   var shouldexcute=true
 
   val system = akka.actor.ActorSystem("system")

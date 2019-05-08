@@ -41,8 +41,9 @@ class Game {
   def PlayerJoin(id:String):Unit={
      val player=new Player(id)
      Players+=(id->player)
-     this.dealCard(id)
-     CurrentPlayer=id
+     if(Players.size==1) {
+       CurrentPlayer = id
+     }
      PlayerOrder+=id
   }
   def PlayerLeft(id:String):Unit={

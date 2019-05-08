@@ -1,6 +1,6 @@
 var remainingCard = 0;
 var username = "";
-var CardOnDesk="";
+var NumCardOnDesk="";
 var Point=0;
 var lastCardOnDesk="";
 var gamestate="";
@@ -23,19 +23,23 @@ function setupSocket() {
         gameaction=gameaction.replace(/\n/g, "<br/>");
         document.getElementById("PlayerAction").innerHTML=gameaction;
         var equipmentState = gameState['equipment'];
-        document.getElementById("Points").innerHTML=gameState['playerinfo'][username]['Points']
-        document.getElementById("leaderbroad").innerHTML=game['Leaderbroad']
+        document.getElementById("Points").innerHTML=gameState['playerinfo'][username]['Points'];
+        var leader=gameState['LeaderBroad'];
+        leader=leader.replace(/\n/g, "<br/>");
+        document.getElementById("LeaderBoard").innerHTML=leader;
     });
 }
 
 
 function initializeGame(inputUsername) {
     username = inputUsername;
+
     document.getElementById("PlayerAction").innerHTML="";
-    document.getElementById("LastCard").innerHTML = "";
-    document.getElementById("NumCardDesk").innerHTML = remainingCard;
-    document.getElementById("Points").innerHTML = remainingCard;
-    document.getElementById("leaderbroad").innerHTML=""
+    document.getElementById("LastCard").innerHTML = lastCardOnDesk;
+    document.getElementById("NumCardDesk").innerHTML =NumCardOnDesk;
+    document.getElementById("Points").innerHTML = Point;
+    document.getElementById("LeaderBoard").innerHTML="";
+
     socket.emit("register", username);
 }
 

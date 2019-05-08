@@ -25,8 +25,11 @@ class GameActor extends Actor {
 
     case message:PlayCard=>the_game.play(message.username)
     case message:Slap=>the_game.slap(message.username)
-    case message:AddPlayer=>the_game.PlayerJoin(message.username)
-    case message:RemovePlayer=>the_game.PlayerLeft(message.username)
+    case message:AddPlayer=>
+        the_game.PlayerJoin(message.username)
+        the_game.dealCard(message.username)
+    case message:RemovePlayer=>
+      the_game.PlayerLeft(message.username)
 
     case Setup =>
 
