@@ -1,6 +1,6 @@
 var remainingCard = 0;
 var username = "";
-var CardOnDesk="";
+var NumCardOnDesk="";
 var Point=0;
 var lastCardOnDesk="";
 var gamestate="";
@@ -31,9 +31,9 @@ function setupSocket() {
 function initializeGame(inputUsername) {
     username = inputUsername;
     document.getElementById("PlayerAction").innerHTML="";
-    document.getElementById("LastCard").innerHTML = "";
-    document.getElementById("NumCardDesk").innerHTML = remainingCard;
-    document.getElementById("Points").innerHTML = remainingCard;
+    document.getElementById("LastCard").innerHTML = "Last card is " + lastCardOnDesk;
+    document.getElementById("NumCardDesk").innerHTML = "Number of cards on desk: " + NumCardOnDesk;
+    document.getElementById("Points").innerHTML = "Points: " + Point;
 
     socket.emit("register", username);
 }
