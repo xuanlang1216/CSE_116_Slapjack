@@ -5,7 +5,7 @@
         background: #0945C2;
         margin: 0;}
     #container{width:600px;height: 590px; margin:0 auto; background:#23ECE1}
-    #Points{float: left;
+    #Points{float: right;
         width: 100px;
         height: 40px;
         background: #666;
@@ -18,8 +18,8 @@
         border: 1px solid #c7c7c7;
         margin: 10px;}
     #PlayerAction{float:left;
-        width: 300px;
-        height: 40px;
+        width: 250px;
+        height: 100px;
         background: #666;
         border: 1px solid #c7c7c7;
         margin: 10px;}
@@ -40,10 +40,10 @@
         height: 100px;
         background: #666;
         border: 1px solid #c7c7c7;
-        margin: 30px;}
-    #LeaderBoard{float: right;
+        margin: 10px;}
+    #LeaderBoard{float:right;
         width: 300px;
-        height: 40px;
+        height: 100px;
         background: #666;
         border: 1px solid #c7c7c7;
         margin: 30px;}
@@ -55,13 +55,14 @@
 </head>
 <body onload="initializeGame('{{username}}');">
 <div id = "container">
-    <div id="Points" >test points</div>
-    <div id="LastCard" >test last card on desk</div>
 
+    <div id="LastCard" >test last card on desk</div>
+    <div id="NumCardDesk" >test number of cards on desk</div>
     <button id="Slap" onclick="slap()">Slap!</button>
     <button id="Play" onclick="play()">Play!</button>
+    <div id="Points" >test points</div>
     <div id="PlayerAction" >test player action</div>
-    <div id="NumCardDesk" >test number of cards on desk</div>
+
     <div id="LeaderBoard" >should be leaderboard</div>
 
     <script src="game.js"></script>
