@@ -17,20 +17,27 @@ class HandleMessagesFromPython() extends Emitter.Listener {
     // Use runLater when interacting with the GUI
     Platform.runLater(() => {
       val jsonGameState = objects.apply(0).toString
-      println(jsonGameState)
+     // println(jsonGameState)
       val gameState: JsValue = Json.parse(jsonGameState)
       val CardOnDesk = (gameState \ "CardOnDesk").as[String]
       val playerinfo = (gameState \ "playerinfo").as[JsValue]
+      val AllPLAYER=(gameState\"playerinfo").as[Map[String,JsValue]]
+      var PLAYERINFO=""
+      for((k,v)<-AllPLAYER){
+        PLAYERINFO+=k+ Json.stringify(v)+"\n"
+      }
       val lastCardOnDesk=(gameState\"lastcard").as[String]
       val myuserinfo=(playerinfo\"myUsername").as[JsValue]
       val myuserpoint=(myuserinfo\"Points").as[Int]
       val game_state=(gameState\"laststatement").as[String]
       val RemainCard=(gameState\"NumberCardOnDesk").as[Int]
+      val LeaderBroad=(gameState\"LeaderBroad").as[String]
       Gui.RemainingCard.text="There are "+RemainCard.toString+" cards on Desk"
       Gui.PointDisplay.text="Your Points: "+myuserpoint.toString
       Gui.CardDisplay.text=lastCardOnDesk
-      var GameInfo="Card on Desk: "+ CardOnDesk+"\n"+Json.stringify(playerinfo)
-      Gui.gameinfo.text=GameInfo
+      var GameInfo="Card on Desk: "+ CardOnDesk+"\n"+PLAYERINFO
+      //Gui.gameinfo.text=GameInfo
+      Gui.gameinfo.text=LeaderBroad
       Gui.gamestatement.text=game_state
     })
 

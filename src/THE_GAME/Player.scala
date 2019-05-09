@@ -40,4 +40,12 @@ class Player(name:String) {
     )
     Json.stringify(Json.toJson(playerstate))
   }
+
+  def getCards:String={
+    var CardString=""
+    for(c<-myCards){
+      CardString+=c.suit+c.Num+" "
+    }
+    CardString
+  }
 }
